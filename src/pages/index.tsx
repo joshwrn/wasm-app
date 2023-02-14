@@ -35,7 +35,6 @@ export default function Home() {
       //   cur = cur += 1;
       // }
       // console.log("cur", cur)
-      setAns(cur);
         // setDis({ x: clientX, y: clientY })
       //     setDis({
       //   x: add(0, temp.current.x),
@@ -43,8 +42,9 @@ export default function Home() {
       // })
         // temp.current = { x: clientX, y: clientY }
           // setAns(add(dis.x, dis.y));
-          const added = add()
+          const added = add(clientX, clientY)
           console.log("test", added)
+          setAns(added)
           setDis({
             x: clientX,
             y: clientY
