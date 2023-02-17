@@ -73,11 +73,8 @@ export default function Home(): React.ReactNode {
 
         <DraggableCore onDrag={updatePosition} ref={ref}>
           <div
+            className={styles.box}
             style={{
-              border: `1px solid red`,
-              width: `100px`,
-              height: `100px`,
-              position: `absolute`,
               top: dis.y,
               left: dis.x,
             }}
