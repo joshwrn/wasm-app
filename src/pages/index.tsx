@@ -1,55 +1,48 @@
-import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
-import init, { add } from "wasm-lib";
-import { useEffect, useRef, useState } from 'react';
-import Draggable, { DraggableCore, DraggableEvent } from 'react-draggable';
+import { useEffect, useRef, useState } from "react"
 
+import Head from "next/head"
+import { DraggableCore } from "react-draggable"
+import type { DraggableEvent } from "react-draggable"
 
-export default function Home() {
-  const [ans, setAns] = useState(0);
-  const [val1, setVal1] = useState(0);
-  const [val2, setVal2] = useState(0);
-  const temp = useRef({ x: 0, y: 0 })
+import init, { add } from "../../wasm-lib/pkg"
+import styles from "@/styles/Home.module.css"
+
+export default function Home(): React.ReactNode {
+  const [ans, setAns] = useState(0)
+  const [val1, setVal1] = useState(0)
+  const [val2, setVal2] = useState(0)
   const [dis, setDis] = useState({ x: 0, y: 0 })
-  // const [temp, setTemp] = useState({ x: 0, y: 0 })
-  const ref = useRef(null);
+  const [useRust, setUseRust] = useState(true)
+
+  const ref = useRef(null)
   useEffect(() => {
     init()
   }, [])
-  // useEffect(() => {
-  //   init().then(() => {
-  //     // setAns(add(dis.x, dis.y));
-  //     setDis({
-  //       x: add(0, temp.current.x),
-  //       y: add(0, temp.current.y)
-  //     })
-  //   })
-  // }, [])
+
   const updatePosition = (e: DraggableEvent) => {
     if (e instanceof MouseEvent) {
-      const { movementX, movementY, clientX, clientY } = e
-      // const arr = Array.from(Array(2000000).keys())
-      let cur = 0;
-      // for (const i of arr) {
-      //   // const a = Math.pow(Math.PI / 180 * i * 6, 3281234);
-      //   cur = cur += 1;
-      // }
-      // console.log("cur", cur)
-        // setDis({ x: clientX, y: clientY })
-      //     setDis({
-      //   x: add(0, temp.current.x),
-      //   y: add(0, temp.current.y)
-      // })
-        // temp.current = { x: clientX, y: clientY }
-          // setAns(add(dis.x, dis.y));
-          const added = add(clientX, clientY)
-          console.log("test", added)
-          setAns(added)
-          setDis({
-            x: clientX,
-            y: clientY
-          })
-          // setAns(add(dis.x, dis.y));
+      const { clientX, clientY } = e
+
+      let added = 0
+      if (!useRust) {
+        // 10 million
+        const arr = Array.from(Array(10000000).keys())
+        for (const i of arr) {
+          added += clientX + clientY
+        }
+      }
+
+      if (useRust) {
+        added = add(clientX, clientY)
+      }
+
+      setAns(added)
+      setVal1(clientX)
+      setVal2(clientY)
+      setDis({
+        x: clientX,
+        y: clientY,
+      })
     }
   }
   return (
@@ -62,21 +55,36 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <p>{val1} + {val2} = {ans}</p>
-          <input type="number" value={val1} onChange={(e) => setVal1(Number(e.target.value))} />
-          <input type="number" value={val2} onChange={(e) => setVal2(Number(e.target.value))} />
+          <p>
+            x: {val1} y: {val2} total: {ans}
+          </p>
         </div>
-        <DraggableCore
-              onDrag={updatePosition}
-              ref={ref}
-            >
-        <div style={{ border: "1px solid red",
-        width: "100px",
-        height: "100px",
-        position: "absolute",
-        top: dis.y,
-        left: dis.x,
-      }} > drag me </div> 
+        <div className={styles.description}>
+          <button onClick={() => setUseRust((prev) => !prev)}>
+            {!useRust ? `Switch To RUST` : `Switch To JS`}
+          </button>
+          <p>
+            Looping through an array of{` `}
+            {useRust ? `1 billion in RUST` : `10 million in JS`}
+            {` `}
+            before updating mouse position.
+          </p>
+        </div>
+
+        <DraggableCore onDrag={updatePosition} ref={ref}>
+          <div
+            style={{
+              border: `1px solid red`,
+              width: `100px`,
+              height: `100px`,
+              position: `absolute`,
+              top: dis.y,
+              left: dis.x,
+            }}
+          >
+            {` `}
+            drag me{` `}
+          </div>
         </DraggableCore>
       </main>
     </>

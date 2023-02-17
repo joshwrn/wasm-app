@@ -3,11 +3,10 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 pub fn add(left: i32, right: i32) -> i32 {
     let mut cur = 0;
-    for _ in 0..10000000 {
-        // Do nothing
-        cur += 2;
+    // 1 billion
+    for _ in 0..1000000000 {
+        cur += left + right;
     }
-
     cur
 }
 
