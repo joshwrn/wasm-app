@@ -68,7 +68,7 @@ export default function Home(): React.ReactNode {
           </button>
           <p>
             Looping through an array of{` `}
-            {useRust ? `1 billion in RUST` : `10 million in JS`}
+            <span>{useRust ? `1 billion in RUST` : `10 million in JS`}</span>
             {` `}
             before updating mouse position.
           </p>
