@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 
 import Head from "next/head"
+import Image from "next/image"
 import { DraggableCore } from "react-draggable"
 import type { DraggableEvent } from "react-draggable"
 
 import init, { add } from "../../wasm-lib/pkg"
+import jsIcon from "../images/js.png"
+import rustIcon from "../images/rust.png"
 import styles from "@/styles/Home.module.css"
 
 export default function Home(): React.ReactNode {
@@ -79,6 +82,21 @@ export default function Home(): React.ReactNode {
               left: dis.x,
             }}
           >
+            {useRust ? (
+              <Image
+                src={rustIcon}
+                alt="rust"
+                draggable={false}
+                className={styles.logo}
+              />
+            ) : (
+              <Image
+                draggable={false}
+                src={jsIcon}
+                alt="js"
+                className={styles.logo}
+              />
+            )}
             {` `}
             drag me{` `}
           </div>
