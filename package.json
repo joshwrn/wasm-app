@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:wasm": "cd wasm-lib && wasm-pack build --target web --out-dir pkg",
-    "build:all": "cd wasm-lib && wasm-pack build --target web --out-dir pkg && cd .. && next build"
+    "build:wasm": "cd wasm-lib && wasm-pack build --target web --out-dir pkg && cd pkg && rm -rf .gitignore"
   },
   "dependencies": {
     "@next/font": "13.1.6",
