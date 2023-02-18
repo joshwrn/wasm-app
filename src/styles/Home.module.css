@@ -45,6 +45,7 @@ flex-direction: column;
   border-radius: 5px;
   font-family: var(--font-mono);
   user-select: none;
+  transform: translate(-50%, -50%);
 }
 .logo {
   width: 70%;
@@ -52,5 +53,6 @@ flex-direction: column;
   object-fit: contain;
   border-radius: 5px;
 }
+
 
 

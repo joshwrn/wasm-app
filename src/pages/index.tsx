@@ -73,13 +73,12 @@ export default function Home(): React.ReactNode {
             before updating mouse position.
           </p>
         </div>
-
         <DraggableCore onDrag={updatePosition} ref={ref}>
           <div
             className={styles.box}
             style={{
-              top: dis.y,
-              left: dis.x,
+              top: dis.y === 0 ? `50%` : dis.y,
+              left: dis.x === 0 ? `50%` : dis.x,
             }}
           >
             {useRust ? (
