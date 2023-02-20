@@ -12,8 +12,6 @@ import styles from "@/styles/Home.module.css"
 
 export default function Home(): React.ReactNode {
   const [ans, setAns] = useState(0)
-  const [val1, setVal1] = useState(0)
-  const [val2, setVal2] = useState(0)
   const [dis, setDis] = useState({ x: 0, y: 0 })
   const [useRust, setUseRust] = useState(true)
   const [time, setTime] = useState(`0`)
@@ -47,8 +45,6 @@ export default function Home(): React.ReactNode {
       }
 
       setAns(added)
-      setVal1(clientX)
-      setVal2(clientY)
       setDis({
         x: clientX,
         y: clientY,
@@ -67,6 +63,9 @@ export default function Home(): React.ReactNode {
         <div className={styles.description}>
           <p>
             time: <span>{time}ms</span>
+          </p>
+          <p>
+            total: <span>{ans}</span>
           </p>
         </div>
         <div className={styles.description}>
