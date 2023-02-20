@@ -16,6 +16,7 @@ export default function Home(): React.ReactNode {
   const [val2, setVal2] = useState(0)
   const [dis, setDis] = useState({ x: 0, y: 0 })
   const [useRust, setUseRust] = useState(true)
+  const [time, setTime] = useState(`0`)
 
   const ref = useRef(null)
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function Home(): React.ReactNode {
     if (e instanceof MouseEvent) {
       const { clientX, clientY } = e
 
+      const t1 = performance.now()
       let added = 0
       if (!useRust) {
         // 10 million
@@ -37,6 +39,11 @@ export default function Home(): React.ReactNode {
 
       if (useRust) {
         added = add(clientX, clientY)
+      }
+      const t2 = performance.now()
+      const total = t2 - t1
+      if (total > 0) {
+        setTime(total.toFixed(2))
       }
 
       setAns(added)
@@ -59,7 +66,7 @@ export default function Home(): React.ReactNode {
       <main className={styles.main}>
         <div className={styles.description}>
           <p>
-            x: {val1} y: {val2} total: {ans}
+            time: <span>{time}ms</span>
           </p>
         </div>
         <div className={styles.description}>
